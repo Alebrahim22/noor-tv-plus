@@ -1,0 +1,403 @@
+<title>مقارنة نور تي في</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+/* Layout: one reading column; the comparison matrix breaks wide inside its own scroller. */
+:root{
+  --bg:#f6f7f4; --surface:#ffffff; --fg:#17231f; --muted:#5b6b65; --line:#dfe5e1;
+  --accent:#0f5b47; --accent-soft:#e3efe9; --gold:#9a6a12; --gold-soft:#f6ecd7;
+  --yes:#1d7a4f; --part:#a06a00; --no:#b0413e; --unk:#7a8580;
+  --display:"Readex Pro","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1614; --surface:#16201d; --fg:#e4ece8; --muted:#9aaba4; --line:#28352f;
+  --accent:#5fc3a2; --accent-soft:#18302a; --gold:#e0b557; --gold-soft:#2c2412;
+  --yes:#5bc48f; --part:#e3ad45; --no:#e9817d; --unk:#8d9a95; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1614; --surface:#16201d; --fg:#e4ece8; --muted:#9aaba4; --line:#28352f;
+  --accent:#5fc3a2; --accent-soft:#18302a; --gold:#e0b557; --gold-soft:#2c2412;
+  --yes:#5bc48f; --part:#e3ad45; --no:#e9817d; --unk:#8d9a95; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.8}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:48px}
+h1,h2,h3{font-family:var(--display);line-height:1.35;text-wrap:balance;margin:0}
+h1{font-size:clamp(28px,5vw,40px)}
+h2{font-size:24px;margin-bottom:14px}
+h3{font-size:18px}
+p{margin:0 0 10px;max-width:68ch}
+a{color:var(--accent)}
+.eyebrow{font-size:13px;color:var(--muted);letter-spacing:.02em}
+.lede{font-size:18px;color:var(--muted);max-width:62ch}
+header{display:grid;gap:10px;border-bottom:1px solid var(--line);padding-bottom:28px}
+.verdict{background:var(--accent-soft);border-radius:14px;padding:22px 24px;display:grid;gap:8px}
+.verdict strong{color:var(--accent)}
+ul.clean{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+.feat h3{font-size:16px;margin-bottom:6px;color:var(--accent)}
+.feat ul{margin:0;padding-inline-start:18px;font-size:15px;display:grid;gap:4px}
+.bugs{display:grid;gap:10px}
+.bug{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-inline-start:4px solid var(--sev);border-radius:10px;padding:14px 16px}
+.bug .sev{font-size:12px;font-weight:700;color:var(--sev);white-space:nowrap;padding-top:3px}
+.bug p{margin:0;font-size:15px}
+.bug code,.mono{font-family:ui-monospace,Consolas,monospace;font-size:13px;direction:ltr;unicode-bidi:embed}
+.repos{display:grid;gap:14px}
+.repo{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:6px}
+.repo-head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:baseline}
+.repo-head h3{font-size:18px}
+.chip{font-size:12px;border-radius:999px;padding:2px 10px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.chip.warn{background:var(--gold-soft);color:var(--gold)}
+.repo p{font-size:15px;margin:0}
+.repo .take{font-size:15px}
+.repo .take b{color:var(--gold)}
+.scroller{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:820px;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:center;vertical-align:middle}
+th:first-child,td:first-child{text-align:start;position:sticky;right:0;background:var(--surface);min-width:190px}
+thead th{font-family:var(--display);font-size:13px;font-weight:500;color:var(--muted);background:var(--surface)}
+thead th.noor{color:var(--accent)}
+td.noor{background:var(--accent-soft)}
+tr.group td{background:var(--bg);font-weight:700;color:var(--muted);font-size:12px;text-align:start}
+.y{color:var(--yes);font-weight:700}.p{color:var(--part);font-weight:700}.n{color:var(--no)}.u{color:var(--unk)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted);margin-top:10px}
+.winners{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.win{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+.win .k{font-size:13px;color:var(--muted)}
+.win .v{font-family:var(--display);font-size:17px;color:var(--accent)}
+.win p{font-size:14px;margin:4px 0 0}
+.phases{display:grid;gap:10px;counter-reset:ph}
+.phase{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.phase .num{font-family:var(--display);font-size:18px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--bg)}
+.phase h3{font-size:16px}
+.phase p{font-size:15px;margin:2px 0 0}
+.src{font-size:12px;color:var(--gold);font-weight:700}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.tier{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.tier h3{font-size:16px;margin-bottom:8px}
+.tier ul{margin:0;padding-inline-start:18px;font-size:15px;display:grid;gap:4px}
+pre.tree{direction:ltr;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.7;margin:0}
+.note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:18px}
+</style>
+
+<div class="wrap" dir="rtl" lang="ar">
+
+<header>
+  <div class="eyebrow">بحث ومقارنة · 16 نوفمبر 2026</div>
+  <h1>نور تي في مقابل أفضل 5 مشاريع بجيت هاب</h1>
+  <p class="lede">قريت سكيل ماجد كامل، الكود قبل الشرح، وقارنته بأقوى خمس مشاريع تسوي نفس الشي: تنظيف أندرويد تي في وتغيير شاشته الرئيسية بمساعد ذكي، مع التركيز على المواقيت والأذان.</p>
+</header>
+
+<section class="verdict">
+  <h2>الخلاصة</h2>
+  <p><strong>ما فيه مشروع واحد يغلب نور تي في بكل شي.</strong> نور أبسط وأقرب لك (لهجة خليجية، طريقة حساب الكويت، أذان بصوت المؤذن اللي تختاره، وما يقطع عليك الفيلم)، وصفحة الجوال فيه شي حلو وما تلقاه إلا عند UrTV.</p>
+  <p>بس فيه نواقص واضحة: الأذان يعتمد على الإنترنت، ما فيه أذان للفجر، ما فيه إقامة ولا تنبيه قبل الأذان، والأوامر مكتوبة للماك أكثر من الويندوز. ولقيت بالكود خلل ممكن يوقف الأذان لين تطفي التلفزيون وتشغله.</p>
+  <p><strong>الأفضل كأساس للدمج:</strong> نور تي في نفسه، فوق CleanYourTV المحدّث، وناخذ أفكار الأذان والمواقيت من Afnon وUrTV وKLightTV، وطريقة تنظيم السكيل والخصوصية من cleantv.</p>
+</section>
+
+<section>
+  <h2>متطلباتك للسكيل المدموج</h2>
+  <p>هذي تغلب على أي شي بالمقارنة تحت:</p>
+  <div class="feat-grid">
+    <div class="feat"><h3>المواقيت: المذهب الجعفري</h3><ul>
+      <li>الفجر عند 16° تحت الأفق، المغرب عند 4° (بعد ذهاب الحمرة)، والعشاء عند 14°. هذي طريقة «الشيعة الإثنا عشرية، مؤسسة ليفا، قم» (رقم 0 بـ Aladhan)</li>
+      <li>مدينة الكويت اليوم 16 نوفمبر: الفجر 5:00، الظهر 11:33، المغرب 5:08 (الغروب 4:53)</li>
+      <li>الحساب يصير على التلفزيون نفسه بدون نت، ونطابقه مع Aladhan</li>
+      <li>تعديل دقايق لكل صلاة، عشان تطابقها مع تقويم مسجدك أو حسينيتك</li>
+    </ul></div>
+    <div class="feat"><h3>الأذان: 3 مرات باليوم</h3><ul>
+      <li><b>الفجر</b></li>
+      <li><b>الظهرين</b> وقت الظهر</li>
+      <li><b>العشاءين</b> وقت المغرب الجعفري</li>
+      <li>بدون إقامة، وبدون تنبيه قبل الأذان أو بعده، الأذان بس</li>
+      <li>الفجر يأذّن كامل بعد، لأن الأذان الجعفري ما فيه «الصلاة خير من النوم»، وهذا كان سبب إن نور يكتفي بشريط للفجر</li>
+    </ul></div>
+    <div class="feat"><h3>الصوت: محمد بوجبارة</h3><ul>
+      <li>تسجيل واحد للثلاث أوقات: «اذان محمد بوجبارة على الطريقة الفارسية» (دقيقتين و28 ثانية)</li>
+      <li>التسجيل الأصلي كما هو، بدون تنظيف، لأن صوت الملا فيه أكمل</li>
+      <li>يبقى أسلوب نور: لو فيلم شغال يطلع شريط بس وما يقطع عليك</li>
+    </ul></div>
+    <div class="feat"><h3>أدعية بمواعيدها</h3><ul>
+      <li><b>دعاء الندبة:</b> كل جمعة الساعة 10:30 الصبح، بصوت باقر المقدسي (27 دقيقة، يخلص 10:57 قبل أذان الظهرين)</li>
+      <li><b>دعاء كميل:</b> كل خميس الساعة 8:30 بالليل، بصوت علي بوحمد (من قناته الرسمية، 20 دقيقة)</li>
+      <li>الصوت ينزل داخل التطبيق مثل الأذان، فما يحتاج نت ولا يطلع إعلان يوتيوب</li>
+      <li>يشتغل بروحه لو التلفزيون شغال على الشاشة الرئيسية. ولو فيلم أو قناة شغالة، يطلع شريط «دعاء كميل · اضغط OK للتشغيل» وما يقطع عليك</li>
+      <li>أي زر بالريموت يوقفه، ولو تأخر ووصل وقت الأذان، يوقف الدعاء ويأذّن</li>
+      <li>لو التلفزيون طافي ما يشتغل، لأن أندرويد تي في ما يسمح لتطبيق يشغّل الشاشة</li>
+    </ul></div>
+    <div class="feat"><h3>التاريخ الهجري</h3><ul>
+      <li>الحساب يعطي اليوم 6 جمادى الآخرة 1448، وبداية الشهر عند الشيعة تمشي على رؤية الهلال وإعلان المرجع، وأحياناً تفرق يوم</li>
+      <li>تعديل ±1 أو ±2 يوم، تغيّره من صفحة الجوال بضغطة أول كل شهر</li>
+      <li>الأيام البيض والجمعة تمشي على التاريخ المعدّل</li>
+    </ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>المناسبات الجعفرية فوق الساعة</h2>
+  <p>تطلع مكان «جمعة مباركة» بيومها، على التاريخ الهجري المعدّل. المواليد والأعياد بسطر ذهبي، والوفيات وليالي محرم بسطر رمادي هادي بدون تهنئة، وما تطلع «جمعة مباركة» بهالأيام. الجمعة العادية تبقى «جمعة مباركة». هذي مسودة، وبعض التواريخ فيها أكثر من رواية، فراجعها وقل لي شنو أغيّر.</p>
+  <div class="scroller">
+    <table style="min-width:620px">
+      <thead><tr><th>الشهر</th><th>اليوم</th><th style="text-align:start">السطر على الشاشة</th><th>رواية ثانية</th></tr></thead>
+      <tbody>
+        <tr><td>محرم</td><td>1–9</td><td style="text-align:start" class="u">عشرة محرم · اليوم {n}</td><td></td></tr>
+        <tr><td>محرم</td><td>10</td><td style="text-align:start" class="u">عاشوراء · ذكرى استشهاد الإمام الحسين (ع)</td><td></td></tr>
+        <tr><td>محرم</td><td>25</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام زين العابدين (ع)</td><td>12 محرم</td></tr>
+        <tr><td>صفر</td><td>7</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الحسن المجتبى (ع)</td><td>28 صفر</td></tr>
+        <tr><td>صفر</td><td>20</td><td style="text-align:start" class="u">أربعينية الإمام الحسين (ع)</td><td></td></tr>
+        <tr><td>صفر</td><td>28</td><td style="text-align:start" class="u">ذكرى وفاة النبي محمد ﷺ</td><td></td></tr>
+        <tr><td>صفر</td><td>آخره</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الرضا (ع)</td><td>17 صفر</td></tr>
+        <tr><td>ربيع الأول</td><td>8</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الحسن العسكري (ع)</td><td></td></tr>
+        <tr><td>ربيع الأول</td><td>9</td><td style="text-align:start" class="p">بداية إمامة الإمام المهدي (عج)</td><td></td></tr>
+        <tr><td>ربيع الأول</td><td>17</td><td style="text-align:start" class="p">ميلاد النبي محمد ﷺ والإمام الصادق (ع)</td><td></td></tr>
+        <tr><td>ربيع الآخر</td><td>8</td><td style="text-align:start" class="p">ميلاد الإمام الحسن العسكري (ع)</td><td>10 ربيع الآخر</td></tr>
+        <tr><td>جمادى الأولى</td><td>5</td><td style="text-align:start" class="p">ميلاد السيدة زينب (ع)</td><td></td></tr>
+        <tr><td>جمادى الأولى</td><td>13</td><td style="text-align:start" class="u">الفاطمية الأولى · ذكرى استشهاد السيدة الزهراء (ع)</td><td></td></tr>
+        <tr><td>جمادى الآخرة</td><td>3</td><td style="text-align:start" class="u">الفاطمية الثانية · ذكرى استشهاد السيدة الزهراء (ع)</td><td></td></tr>
+        <tr><td>جمادى الآخرة</td><td>20</td><td style="text-align:start" class="p">ميلاد السيدة فاطمة الزهراء (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>1</td><td style="text-align:start" class="p">ميلاد الإمام الباقر (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>3</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الهادي (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>10</td><td style="text-align:start" class="p">ميلاد الإمام الجواد (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>13</td><td style="text-align:start" class="p">ميلاد الإمام علي (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>15</td><td style="text-align:start" class="u">ذكرى وفاة السيدة زينب (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>25</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الكاظم (ع)</td><td></td></tr>
+        <tr><td>رجب</td><td>27</td><td style="text-align:start" class="p">المبعث النبوي الشريف</td><td></td></tr>
+        <tr><td>شعبان</td><td>3</td><td style="text-align:start" class="p">ميلاد الإمام الحسين (ع)</td><td></td></tr>
+        <tr><td>شعبان</td><td>4</td><td style="text-align:start" class="p">ميلاد أبي الفضل العباس (ع)</td><td></td></tr>
+        <tr><td>شعبان</td><td>5</td><td style="text-align:start" class="p">ميلاد الإمام زين العابدين (ع)</td><td></td></tr>
+        <tr><td>شعبان</td><td>11</td><td style="text-align:start" class="p">ميلاد علي الأكبر (ع)</td><td></td></tr>
+        <tr><td>شعبان</td><td>15</td><td style="text-align:start" class="p">ميلاد الإمام المهدي (عج)</td><td></td></tr>
+        <tr><td>رمضان</td><td>1</td><td style="text-align:start" class="p">شهر رمضان المبارك</td><td></td></tr>
+        <tr><td>رمضان</td><td>15</td><td style="text-align:start" class="p">ميلاد الإمام الحسن المجتبى (ع)</td><td></td></tr>
+        <tr><td>رمضان</td><td>19</td><td style="text-align:start" class="u">ليلة القدر · ذكرى ضربة الإمام علي (ع)</td><td></td></tr>
+        <tr><td>رمضان</td><td>21</td><td style="text-align:start" class="u">ليلة القدر · ذكرى استشهاد الإمام علي (ع)</td><td></td></tr>
+        <tr><td>رمضان</td><td>23</td><td style="text-align:start" class="p">ليلة القدر</td><td></td></tr>
+        <tr><td>شوال</td><td>1</td><td style="text-align:start" class="p">عيد الفطر المبارك</td><td></td></tr>
+        <tr><td>شوال</td><td>25</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الصادق (ع)</td><td></td></tr>
+        <tr><td>ذو القعدة</td><td>1</td><td style="text-align:start" class="p">ميلاد السيدة فاطمة المعصومة (ع)</td><td></td></tr>
+        <tr><td>ذو القعدة</td><td>11</td><td style="text-align:start" class="p">ميلاد الإمام الرضا (ع)</td><td></td></tr>
+        <tr><td>ذو القعدة</td><td>آخره</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الجواد (ع)</td><td></td></tr>
+        <tr><td>ذو الحجة</td><td>7</td><td style="text-align:start" class="u">ذكرى استشهاد الإمام الباقر (ع)</td><td></td></tr>
+        <tr><td>ذو الحجة</td><td>9</td><td style="text-align:start" class="p">يوم عرفة</td><td></td></tr>
+        <tr><td>ذو الحجة</td><td>10</td><td style="text-align:start" class="p">عيد الأضحى المبارك</td><td></td></tr>
+        <tr><td>ذو الحجة</td><td>15</td><td style="text-align:start" class="p">ميلاد الإمام الهادي (ع)</td><td>2 رجب</td></tr>
+        <tr><td>ذو الحجة</td><td>18</td><td style="text-align:start" class="p">عيد الغدير الأغر</td><td></td></tr>
+        <tr><td>ذو الحجة</td><td>24</td><td style="text-align:start" class="p">يوم المباهلة</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="legend"><span class="p">ذهبي: ميلاد أو عيد</span><span class="u">رمادي: وفاة أو مناسبة حزن</span></div>
+</section>
+
+<section>
+  <h2>شنو يسوي سكيل ماجد بالضبط</h2>
+  <p>هذي كل مميزاته من الكود نفسه، مو بس من الشرح:</p>
+  <div class="feat-grid">
+    <div class="feat"><h3>التنظيف</h3><ul>
+      <li>يدوّر على التلفزيون بالشبكة بروحه (بورت 5555)</li>
+      <li>نسخة احتياطية قبل أي شي، ومعها ملف يرجّع كل اللي انطفى</li>
+      <li>تعطيل بس، ممنوع الحذف حتى لو طلبت</li>
+      <li>5 تطبيقات بكل دفعة وبإذنك، وصورة شاشة بعد كل دفعة</li>
+      <li>قوائم آمنة لكل ماركة (من CleanYourTV)</li>
+    </ul></div>
+    <div class="feat"><h3>الشاشة الرئيسية</h3><ul>
+      <li>لانشر CleanYourTV بشكل أبل تي في</li>
+      <li>سطر فوق الساعة: التاريخ الهجري، الطقس، والصلاة الجاية بعد كم</li>
+      <li>«جمعة مباركة 🌿» يوم الجمعة، و«الأيام البيض 🤍» من 13 لين 15 بلون ذهبي</li>
+      <li>3 أشكال: الزخرفة، مسجد الليل، أوقات اليوم (الخلفية تتغير صبح وعصر وليل)، أو صورتك</li>
+    </ul></div>
+    <div class="feat"><h3>الأذان</h3><ul>
+      <li>تختار المؤذن، وكلود ينزّل أذانه من يوتيوب ويقصّه ويضبط صوته</li>
+      <li>لو الشاشة الرئيسية قدامك وما في شي شغال: يأذّن مع شريط «حان الآن موعد أذان…»</li>
+      <li>لو فيلم أو قناة أو HDMI شغال: شريط بس، ما يقطع عليك</li>
+      <li>يوقف الأذان أول ما تفتح أي تطبيق</li>
+      <li>الفجر شريط بس، لأن أغلب التسجيلات ما فيها «الصلاة خير من النوم»</li>
+      <li>المواقيت من موقع Aladhan، وتنحفظ لليوم عشان لو طار النت</li>
+    </ul></div>
+    <div class="feat"><h3>التذكيرات</h3><ul>
+      <li>كل 45 دقيقة سطر «صلّ على النبي ﷺ» لمدة 10 ثواني</li>
+      <li>يوم الجمعة: «لا تنسى سورة الكهف» وبعدها «لا تنسى الصلاة على الحبيب ﷺ»</li>
+    </ul></div>
+    <div class="feat"><h3>كروت بضغطة</h3><ul>
+      <li>5 تطبيقات صغيرة بالشريط: سورة الكهف، البقرة، أذكار الصباح، أذكار المساء، الرقية</li>
+      <li>كل كرت يفتح فيديو يوتيوب محدد</li>
+    </ul></div>
+    <div class="feat"><h3>صفحة الجوال</h3><ul>
+      <li>رابط مثل <span class="mono">http://192.168.0.20:8080</span> بلا تطبيق</li>
+      <li>تكتب لين 200 حرف، تطلع بنص الشاشة 20 ثانية</li>
+      <li>ترسم بإصبعك بـ5 ألوان، والرسم يطلع لايف ويختفي بعد 15 ثانية</li>
+    </ul></div>
+    <div class="feat"><h3>الأمان والتسليم</h3><ul>
+      <li>يستأذنك قبل كل دفعة وكل تركيب</li>
+      <li>لو صار شي غريب يوقف ويرجّع كل شي</li>
+      <li>بالنهاية تقرير: كم تطبيق انطفى، شنو انضاف، وين النسخة الاحتياطية، ورابط الجوال</li>
+      <li>يطلب منك تطفي التصحيح عبر الشبكة</li>
+    </ul></div>
+  </div>
+</section>
+
+<section>
+  <h2>نقاط ضعف لقيتها بالكود</h2>
+  <div class="bugs">
+    <div class="bug" style="--sev:var(--no)"><span class="sev">مهم</span><p><b>الأذان ممكن يوقف أيام.</b> كل أذان يجدول اللي بعده. لو النت طايح لحظة الجدولة (والمواقيت مو محفوظة)، ما ينحط موعد، وما فيه شي يعيد المحاولة لين يعاد تشغيل التلفزيون. <span class="mono">Adhan.schedule</span> و<span class="mono">Reminder.onReceive</span></p></div>
+    <div class="bug" style="--sev:var(--no)"><span class="sev">مهم لك</span><p><b>مكتوب للماك.</b> <span class="mono">ping -c 2 -t 3</span> و<span class="mono">nc -G</span> و<span class="mono">venv/bin/pip</span> ما تشتغل كذا على الويندوز. بالويندوز غالباً يطلع لك «التلفزيون وقف عن الرد» بعد كل دفعة حتى لو التلفزيون شغال.</p></div>
+    <div class="bug" style="--sev:var(--part)"><span class="sev">متوسط</span><p><b>المواقيت أونلاين بس.</b> ما فيه حساب على التلفزيون نفسه، ولا مذهب العصر الحنفي، ولا تعديل التاريخ الهجري، ولا تعديل دقايق لكل صلاة.</p></div>
+    <div class="bug" style="--sev:var(--part)"><span class="sev">متوسط</span><p><b>صفحة الجوال بلا كلمة سر.</b> أي أحد على واي فاي البيت (ضيوف مثلاً) يقدر يكتب أو يرسم على الشاشة.</p></div>
+    <div class="bug" style="--sev:var(--unk)"><span class="sev">بسيط</span><p><b>تذكير الكهف قبل الساعة 5 العصر</b> مو قبل المغرب الفعلي مثل ما مكتوب بالشرح، والكروت تحتاج يوتيوب ونت.</p></div>
+    <div class="bug" style="--sev:var(--unk)"><span class="sev">بسيط</span><p><b>ما يتأكد إن ADB انسكر.</b> يطلب منك تطفيه بس. CleanYourTV وcleantv عندهم أداة تثبت إن البورت انسكر فعلاً.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>أفضل 5 مشاريع لنفس الموضوع</h2>
+  <p>دوّرت بجيت هاب على عشرات المشاريع (تنظيف تلفزيون بمساعد ذكي، لانشرات إسلامية، أذان). اخترت هذولا لأنهم الأقوى أو الأقرب لاستخدامك:</p>
+  <div class="repos">
+    <div class="repo">
+      <div class="repo-head"><h3><a href="https://github.com/Gathin23/cleanyourtv">CleanYourTV</a></h3><span class="chip">⭐ 58,584</span><span class="chip">MIT</span><span class="chip">الأساس اللي بني عليه نور</span></div>
+      <p>المشروع الأم. برومبت للمساعد الذكي، قوائم تنظيف مجرّبة لمئات الموديلات، لانشر خفيف، 36 إضافة (مواقيت صلاة، مؤقت نوم، ساعات هادئة، طقس…)، وكل سكربت له نسخة ويندوز.</p>
+      <p class="take"><b>ناخذ منه:</b> آخر قواعد الأمان (السكربت يرفض يطفي حزم النظام الأساسية، ممنوع فتح تطبيقات المصنع، حماية الشاشة الرئيسية)، أداة التأكد من سكر ADB، نسخ PowerShell، وإضافتي مؤقت النوم والساعات الهادئة.</p>
+    </div>
+    <div class="repo">
+      <div class="repo-head"><h3><a href="https://github.com/tshi-dev/UrTV">UrTV · تلفزيونك</a></h3><span class="chip">⭐ 253</span><span class="chip warn">بلا رخصة</span><span class="chip">سعودي، الأغنى بالمميزات</span></div>
+      <p>واجهة عربية وشاشة توقف. يتركّب من التلفزيون وحده بدون كمبيوتر. 42 قارئ وإذاعات، 21 أذان بتوقيت أم القرى، عدّاد الإقامة، شريط «أذان المغرب بعد 8 دقايق»، تعديل كل صلاة ±20 دقيقة، المناسبات (رمضان، عرفة، عاشوراء)، أذكار حسب الوقت، تعتيم الليل، وصفحة جوال فيها ريموت وكتابة عربي ورسالة ورسم وصور.</p>
+      <p class="take"><b>ناخذ منه (أفكار بس، نعيد كتابتها):</b> الإقامة، التنبيه قبل الأذان، تعديل الدقايق، المناسبات، الأذكار حسب الوقت، وتوسيع صفحة الجوال بريموت وكتابة عربي.</p>
+    </div>
+    <div class="repo">
+      <div class="repo-head"><h3><a href="https://github.com/egyjs/afnon-android-tv-launcher">Afnon · أفنون</a></h3><span class="chip">⭐ 49</span><span class="chip">MIT</span><span class="chip">لانشر إسلامي</span></div>
+      <p>شاشة رئيسية حول يوم الصلاة. مواقيت بدون نت محسوبة على التلفزيون (مكتبة adhan-java، 245 مدينة)، مذهب العصر، تعديل الهجري، القبلة واتجاه التلفزيون، 16 مؤذن مع أذان فجر مستقل، يرفع الصوت للأذان لو التلفزيون صامت ويرجّعه، تذكير قبل الصلاة 5 لين 30 دقيقة، وضع الجمعة ورمضان، و19 إذاعة قرآن. وفيه تطبيق جوال يركّبه بدون كمبيوتر.</p>
+      <p class="take"><b>ناخذ منه (ونقدر ننسخ الكود):</b> حساب المواقيت بدون نت، أذان الفجر المستقل، رفع الصوت للأذان، التذكير قبل الصلاة، وضع رمضان، والقبلة.</p>
+    </div>
+    <div class="repo">
+      <div class="repo-head"><h3><a href="https://github.com/JohnWayneeee/cleantv">cleantv</a></h3><span class="chip">⭐ 49</span><span class="chip">MIT</span><span class="chip">سكيل كلود حقيقي</span></div>
+      <p>أحسن سكيل منظّم شفته: ملف SKILL.md قصير، وكل مرحلة لها ملف شرح، وبنك أسئلة، وسكربتات بايثون تشتغل على أي نظام. فيه مرحلة خصوصية إجبارية (يطفي تعرّف الشاشة على اللي تشوفه ACR، ويسحب المايك والكاميرا من تطبيقات الشركة)، ضبط الصورة والصوت، وملف يرجّع كل شي (التطبيقات والإعدادات والشاشة الرئيسية).</p>
+      <p class="take"><b>ناخذ منه:</b> طريقة التنظيم بمراحل، سكربتات بايثون بدل bash، مرحلة الخصوصية، والإرجاع الكامل.</p>
+    </div>
+    <div class="repo">
+      <div class="repo-head"><h3><a href="https://github.com/linkq8/KLightTV">KLightTV</a></h3><span class="chip">⭐ 11</span><span class="chip warn">بلا رخصة</span><span class="chip">كويتي</span></div>
+      <p>واجهة وشاشة توقف، نجومه قليلة بس هو الأقرب لك: مواقيت مناطق الكويت من مصادر رسمية، تعديل كل صلاة ±30 دقيقة، جدول باكر يطلع بعد العشاء بنص ساعة، تنبيه صامت عند الصلاة أو قبلها بـ5 أو 10 دقايق، خيارات تكبير الخط والتباين.</p>
+      <p class="take"><b>ناخذ منه (أفكار بس):</b> دقة مواقيت مناطق الكويت، جدول باكر بعد العشاء، وخيارات القراءة لكبار السن.</p>
+    </div>
+  </div>
+  <p class="note" style="border:0;padding:6px 0 0">مشاريع ما دخلت القائمة: <a href="https://github.com/mihirgupta0900/tv-home">tv-home</a> (830 ⭐، نسخة أبسط من CleanYourTV)، و<a href="https://github.com/HoangTran0410/tv-remote">tv-remote</a> (ريموت من الجوال، ونستفيد منه لو بغينا نطوّر صفحة الجوال).</p>
+</section>
+
+<section>
+  <h2>جدول المقارنة</h2>
+  <div class="scroller">
+    <table>
+      <thead><tr>
+        <th>الميزة</th><th class="noor">نور تي في</th><th>CleanYourTV</th><th>UrTV</th><th>Afnon</th><th>cleantv</th><th>KLightTV</th>
+      </tr></thead>
+      <tbody>
+        <tr class="group"><td colspan="7">التركيب والأمان</td></tr>
+        <tr><td>تعطيل بدون حذف + نسخة احتياطية</td><td class="noor y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="p">جزئي</td></tr>
+        <tr><td>السكربت يرفض حزم النظام الخطيرة</td><td class="noor p">بالكلام بس</td><td class="y">✓</td><td class="u">؟</td><td class="u">؟</td><td class="y">✓</td><td class="u">؟</td></tr>
+        <tr><td>يرجّع كل شي (مو بس التطبيقات)</td><td class="noor p">التطبيقات</td><td class="y">✓</td><td class="y">✓</td><td class="u">؟</td><td class="y">✓</td><td class="p">جزئي</td></tr>
+        <tr><td>يثبت إن ADB انسكر</td><td class="noor n">✗</td><td class="y">✓</td><td class="u">؟</td><td class="u">؟</td><td class="y">✓</td><td class="n">✗</td></tr>
+        <tr><td>يشتغل زين على الويندوز</td><td class="noor p">جزئي</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="u">؟</td></tr>
+        <tr><td>تركيب بدون كمبيوتر</td><td class="noor n">✗</td><td class="n">✗</td><td class="y">من التلفزيون</td><td class="y">من الجوال</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>خصوصية: ACR والمايك والكاميرا</td><td class="noor n">✗</td><td class="p">جزئي</td><td class="u">؟</td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td></tr>
+        <tr><td>قوائم مجرّبة لكل ماركة</td><td class="noor y">من CleanYourTV</td><td class="y">مئات</td><td class="p">جزئي</td><td class="p">قليل</td><td class="p">قليل</td><td class="n">✗</td></tr>
+        <tr class="group"><td colspan="7">المواقيت والأذان</td></tr>
+        <tr><td>أذان بصوت</td><td class="noor y">أي مؤذن</td><td class="n">نغمة بس</td><td class="y">21 أذان</td><td class="y">16 مؤذن</td><td class="n">✗</td><td class="n">صامت</td></tr>
+        <tr><td>أذان فجر مستقل</td><td class="noor n">شريط بس</td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>ما يقطع الفيلم (شريط بس)</td><td class="noor y">✓</td><td class="y">✓</td><td class="p">يوقف بزر</td><td class="p">يطلع فوقه</td><td class="n">✗</td><td class="y">✓</td></tr>
+        <tr><td>مواقيت بدون نت</td><td class="noor n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="y">✓</td><td class="n">✗</td><td class="u">؟</td></tr>
+        <tr><td>تنبيه قبل الأذان</td><td class="noor n">✗</td><td class="n">✗</td><td class="y">10 د</td><td class="y">5–30 د</td><td class="n">✗</td><td class="y">5 أو 10 د</td></tr>
+        <tr><td>عدّاد الإقامة</td><td class="noor n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>تعديل دقايق كل صلاة</td><td class="noor n">✗</td><td class="n">✗</td><td class="y">±20</td><td class="p">الطريقة والمذهب</td><td class="n">✗</td><td class="y">±30</td></tr>
+        <tr><td>يرفع الصوت للأذان لو صامت</td><td class="noor n">✗</td><td class="n">✗</td><td class="u">؟</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>القبلة</td><td class="noor n">✗</td><td class="n">✗</td><td class="n">✗</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr class="group"><td colspan="7">التذكير والمحتوى</td></tr>
+        <tr><td>«صلّ على النبي ﷺ» كل 45 دقيقة</td><td class="noor y">✓</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>الجمعة وسورة الكهف</td><td class="noor y">✓</td><td class="n">✗</td><td class="u">؟</td><td class="y">✓</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>رمضان والمناسبات</td><td class="noor p">الأيام البيض</td><td class="n">✗</td><td class="y">✓</td><td class="y">رمضان</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>قرآن وأذكار</td><td class="noor y">5 كروت</td><td class="n">✗</td><td class="y">42 قارئ + إذاعات</td><td class="y">19 إذاعة</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>كتابة ورسم من الجوال</td><td class="noor y">✓</td><td class="n">✗</td><td class="y">+ ريموت وصور</td><td class="n">✗</td><td class="n">✗</td><td class="n">✗</td></tr>
+        <tr><td>الطقس والهجري بالشاشة</td><td class="noor y">✓</td><td class="p">إضافة</td><td class="y">✓</td><td class="p">الهجري</td><td class="n">✗</td><td class="y">✓</td></tr>
+        <tr><td>أشكال وثيمات</td><td class="noor y">3</td><td class="y">كثير</td><td class="y">4</td><td class="p">ليلي</td><td class="p">واحد</td><td class="y">2</td></tr>
+        <tr class="group"><td colspan="7">عام</td></tr>
+        <tr><td>سكيل كلود جاهز (SKILL.md)</td><td class="noor y">✓ + بلقن</td><td class="p">برومبت</td><td class="p">برومبت</td><td class="p">CLAUDE.md</td><td class="y">✓ + بلقن</td><td class="n">✗</td></tr>
+        <tr><td>الرخصة (نقدر ننسخ الكود؟)</td><td class="noor y">MIT</td><td class="y">MIT</td><td class="n">بلا رخصة</td><td class="y">MIT</td><td class="y">MIT</td><td class="n">بلا رخصة</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="legend"><span class="y">✓ موجود</span><span class="p">جزئي</span><span class="n">✗ مو موجود</span><span class="u">؟ ما لقيته بالشرح</span></div>
+</section>
+
+<section>
+  <h2>منو الأفضل بكل جانب</h2>
+  <div class="winners">
+    <div class="win"><div class="k">الأمان والتنظيف</div><div class="v">CleanYourTV</div><p>أكثر مشروع مجرّب، والسكربتات نفسها تمنع الغلط.</p></div>
+    <div class="win"><div class="k">المواقيت والأذان</div><div class="v">Afnon ثم UrTV</div><p>بدون نت، أذان فجر، تنبيه قبل، وإقامة عند UrTV.</p></div>
+    <div class="win"><div class="k">تجربة البيت الخليجي</div><div class="v">نور تي في</div><p>لهجتك، ما يقطع الفيلم، الصلاة على النبي، ورسايل الجوال.</p></div>
+    <div class="win"><div class="k">تنظيم السكيل</div><div class="v">cleantv</div><p>مراحل واضحة وسكربتات تشتغل على أي جهاز.</p></div>
+    <div class="win"><div class="k">أكثر مميزات</div><div class="v">UrTV</div><p>بس ما عنده رخصة، فناخذ الأفكار ونكتبها من جديد.</p></div>
+    <div class="win"><div class="k">مواقيت الكويت</div><div class="v">KLightTV</div><p>مناطق الكويت وتعديل الدقايق.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>خطة الدمج: سكيل واحد</h2>
+  <p>نخلي نور تي في هو الأساس لأنه مناسب لك من ناحية الأذان والأسلوب، ونرتّبه على طريقة cleantv (ملف رئيسي قصير وملف لكل مرحلة)، ونضيف له الأحسن من الباقين:</p>
+
+  <div class="phases">
+    <div class="phase"><div class="num">1</div><div><h3>جهّز الجهاز</h3><p>يتعرف على ويندوز أو ماك، ويركّب الناقص بـ<span class="mono">winget</span> أو <span class="mono">brew</span>. السكربتات بايثون عشان تشتغل بالاثنين.</p><span class="src">cleantv + CleanYourTV</span></div></div>
+    <div class="phase"><div class="num">2</div><div><h3>لاقِ التلفزيون واعرفه</h3><p>يدوّر بالشبكة، ويتأكد إنه أندرويد تي في، ويشوف ماركته بالقوائم المجرّبة.</p><span class="src">نور + cleantv</span></div></div>
+    <div class="phase"><div class="num">3</div><div><h3>نسخة احتياطية كاملة</h3><p>التطبيقات والإعدادات والشاشة الرئيسية، وملف إرجاع واحد يرجّعها كلها.</p><span class="src">cleantv</span></div></div>
+    <div class="phase"><div class="num">4</div><div><h3>التنظيف</h3><p>نفس أسلوب نور (5 بالمرة، تشرح كل تطبيق، تستأذن)، والسكربت يرفض حزم النظام الخطيرة وتطبيقات المصنع.</p><span class="src">نور + CleanYourTV</span></div></div>
+    <div class="phase"><div class="num">5</div><div><h3>الخصوصية</h3><p>يطفي تعرّف الشاشة على اللي تشوفه، وإعلانات الشركة، ويسحب المايك والكاميرا من تطبيقاتها.</p><span class="src">cleantv</span></div></div>
+    <div class="phase"><div class="num">6</div><div><h3>الشاشة الجديدة والثيم</h3><p>لانشر CleanYourTV مع سطر نور (الهجري والطقس والصلاة الجاية) والأشكال الثلاثة، وخيار تكبير الخط.</p><span class="src">نور + KLightTV</span></div></div>
+    <div class="phase"><div class="num">7</div><div><h3>المواقيت والأذان</h3><p>حساب جعفري على التلفزيون بدون نت (16° و4° و14°)، مع إعادة محاولة لو صار خطأ. 3 أذانات باليوم (الفجر، الظهرين، العشاءين) بصوت محمد بوجبارة، بدون إقامة ولا تنبيه قبل. تعديل دقايق كل صلاة، تعديل الهجري، ورفع الصوت لو صامت. ويبقى أهم شي بنور: ما يقطع الفيلم.</p><span class="src">نور + Afnon + KLightTV</span></div></div>
+    <div class="phase"><div class="num">8</div><div><h3>التذكير والمحتوى</h3><p>«صلّ على النبي ﷺ» والجمعة والأيام البيض كما هي، ونضيف رمضان والمناسبات والأذكار حسب الوقت والقبلة.</p><span class="src">نور + Afnon + UrTV</span></div></div>
+    <div class="phase"><div class="num">9</div><div><h3>صفحة الجوال</h3><p>الكتابة والرسم كما هم، ونضيف رمز بسيط (PIN) عشان الضيوف، وريموت وكتابة عربي.</p><span class="src">نور + أفكار UrTV</span></div></div>
+    <div class="phase"><div class="num">10</div><div><h3>سكّر وسلّم</h3><p>يسكّر ADB ويثبت إن البورت انسكر، ويعطيك تقرير نور بسطور قصيرة.</p><span class="src">CleanYourTV + نور</span></div></div>
+  </div>
+</section>
+
+<section>
+  <h3 style="margin-bottom:10px">شكل الملفات</h3>
+<pre class="tree">noor-tv-plus/
+├─ .claude-plugin/            plugin.json, marketplace.json
+├─ skills/noor-tv/SKILL.md    short: the rules + the 10 phases
+├─ references/                one file per phase (connect, debloat, privacy,
+│                             launcher, prayer, phone, close) + questions.md
+├─ scripts/                   Python, works on Windows and Mac:
+│                             scan, backup, disable, restore, adb_closed
+├─ noor-app/                  Adhan (offline Jafari calc 16/4/14, 3 adhans:
+│                             Fajr, Dhuhrain, Isha'ain; retry; minute + Hijri
+│                             offsets), Reminder, MessageServer+PIN
+├─ launcher-patch/            Noor line on top of CleanYourTV
+└─ themes/                    zakhrafa, masjid-layl, awqat</pre>
+</section>
+
+<section>
+  <h2>الأولويات</h2>
+  <div class="tiers">
+    <div class="tier"><h3>أول شي (يصلّح نواقص)</h3><ul>
+      <li>تصليح خلل توقف الأذان</li>
+      <li>دعم الويندوز صح</li>
+      <li>مواقيت جعفرية بدون نت، و3 أذانات باليوم</li>
+      <li>أذان بوجبارة، والفجر كامل</li>
+      <li>تعديل الهجري ودقايق كل صلاة</li>
+      <li>قواعد أمان CleanYourTV المحدّثة وسكر ADB بإثبات</li>
+    </ul></div>
+    <div class="tier"><h3>بعدها (تكمّل التجربة)</h3><ul>
+      <li>رمضان والمناسبات</li>
+      <li>رمز لصفحة الجوال</li>
+      <li>رفع الصوت للأذان</li>
+    </ul></div>
+    <div class="tier"><h3>اختياري</h3><ul>
+      <li>مرحلة الخصوصية</li>
+      <li>القبلة</li>
+      <li>ريموت من الجوال</li>
+      <li>إذاعات القرآن</li>
+      <li>مؤقت النوم والساعات الهادئة</li>
+    </ul></div>
+  </div>
+</section>
+
+<p class="note">ملاحظات: قريت الكود والشروحات بس، ما جرّبت أي مشروع على تلفزيون. «؟» بالجدول معناها ما لقيت الميزة مذكورة، مو إنها أكيد مو موجودة. UrTV وKLightTV ما عندهم رخصة، فنقدر ناخذ منهم الأفكار ونكتبها من جديد، لكن ما ننسخ كودهم. الباقين رخصتهم MIT، فننسخ ونذكر أصحابها. عدد النجوم بتاريخ اليوم.</p>
+
+</div>

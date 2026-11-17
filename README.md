@@ -52,3 +52,9 @@
 مبني على [نور تي في](https://github.com/majedphotos/noor-tv) و[CleanYourTV](https://github.com/Gathin23/cleanyourtv) (رخصة MIT). التفاصيل بـ[NOTICE.md](NOTICE.md).
 
 </div>
+
+## Everything needed is in this repo
+- `noor-app/` – Android source, including the Kahf audio in `app/src/kahf/res/raw/`
+- `dist/` – built release APKs for all 7 variants (ready to install on the TV with adb)
+- `source-audio/` – original uncompressed adhan recording
+- `docs/noor-tv-comparison.html` – the skills comparison page
