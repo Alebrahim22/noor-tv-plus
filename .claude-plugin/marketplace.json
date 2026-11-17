@@ -1,0 +1,7 @@
+{
+  "name": "noor-tv-plus",
+  "owner": { "name": "local" },
+  "plugins": [
+    { "name": "noor-tv-plus", "source": "./", "description": "نظّف تلفزيونك وخلّه يأذّن على المذهب الجعفري", "version": "2.0.0" }
+  ]
+}

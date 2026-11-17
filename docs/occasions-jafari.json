@@ -1,0 +1,65 @@
+{
+  "_about": "Jafari occasions for the Noor line above the clock. Dates are Hijri (month 1-12, day) and follow the TV's adjusted Hijri date. kind: wiladah = birth (gold line), shahadah = martyrdom/death (calm grey line, no greeting, and Friday's greeting is hidden that day), eid = feast (gold), season = a range of days. Where narrations differ, the most common date in Kuwait is used and 'alt' lists the other one. Draft for the user to review before building.",
+  "occasions": [
+    {"m": 1, "d": 1, "to": 9, "kind": "season", "text": "عشرة محرم · اليوم {n}"},
+    {"m": 1, "d": 10, "kind": "shahadah", "text": "عاشوراء · ذكرى استشهاد الإمام الحسين (ع)"},
+    {"m": 1, "d": 25, "kind": "shahadah", "text": "ذكرى استشهاد الإمام زين العابدين (ع)", "alt": "12 محرم"},
+
+    {"m": 2, "d": 7, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الحسن المجتبى (ع)", "alt": "28 صفر"},
+    {"m": 2, "d": 20, "kind": "shahadah", "text": "أربعينية الإمام الحسين (ع)"},
+    {"m": 2, "d": 28, "kind": "shahadah", "text": "ذكرى وفاة النبي محمد ﷺ"},
+    {"m": 2, "d": "last", "kind": "shahadah", "text": "ذكرى استشهاد الإمام الرضا (ع)", "alt": "17 صفر"},
+
+    {"m": 3, "d": 8, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الحسن العسكري (ع)"},
+    {"m": 3, "d": 9, "kind": "eid", "text": "بداية إمامة الإمام المهدي (عج)"},
+    {"m": 3, "d": 17, "kind": "wiladah", "text": "ميلاد النبي محمد ﷺ والإمام الصادق (ع)"},
+
+    {"m": 4, "d": 8, "kind": "wiladah", "text": "ميلاد الإمام الحسن العسكري (ع)", "alt": "10 ربيع الآخر"},
+
+    {"m": 5, "d": 5, "kind": "wiladah", "text": "ميلاد السيدة زينب (ع)"},
+    {"m": 5, "d": 13, "kind": "shahadah", "text": "الفاطمية الأولى · ذكرى استشهاد السيدة الزهراء (ع)"},
+
+    {"m": 6, "d": 3, "kind": "shahadah", "text": "الفاطمية الثانية · ذكرى استشهاد السيدة الزهراء (ع)"},
+    {"m": 6, "d": 20, "kind": "wiladah", "text": "ميلاد السيدة فاطمة الزهراء (ع)"},
+
+    {"m": 7, "d": 1, "kind": "wiladah", "text": "ميلاد الإمام الباقر (ع)"},
+    {"m": 7, "d": 3, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الهادي (ع)"},
+    {"m": 7, "d": 10, "kind": "wiladah", "text": "ميلاد الإمام الجواد (ع)"},
+    {"m": 7, "d": 13, "kind": "wiladah", "text": "ميلاد الإمام علي (ع)"},
+    {"m": 7, "d": 15, "kind": "shahadah", "text": "ذكرى وفاة السيدة زينب (ع)"},
+    {"m": 7, "d": 25, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الكاظم (ع)"},
+    {"m": 7, "d": 27, "kind": "eid", "text": "المبعث النبوي الشريف"},
+
+    {"m": 8, "d": 3, "kind": "wiladah", "text": "ميلاد الإمام الحسين (ع)"},
+    {"m": 8, "d": 4, "kind": "wiladah", "text": "ميلاد أبي الفضل العباس (ع)"},
+    {"m": 8, "d": 5, "kind": "wiladah", "text": "ميلاد الإمام زين العابدين (ع)"},
+    {"m": 8, "d": 11, "kind": "wiladah", "text": "ميلاد علي الأكبر (ع)"},
+    {"m": 8, "d": 15, "kind": "wiladah", "text": "ميلاد الإمام المهدي (عج)"},
+
+    {"m": 9, "d": 1, "kind": "season", "text": "شهر رمضان المبارك"},
+    {"m": 9, "d": 15, "kind": "wiladah", "text": "ميلاد الإمام الحسن المجتبى (ع)"},
+    {"m": 9, "d": 19, "kind": "shahadah", "text": "ليلة القدر · ذكرى ضربة الإمام علي (ع)"},
+    {"m": 9, "d": 21, "kind": "shahadah", "text": "ليلة القدر · ذكرى استشهاد الإمام علي (ع)"},
+    {"m": 9, "d": 23, "kind": "season", "text": "ليلة القدر"},
+
+    {"m": 10, "d": 1, "kind": "eid", "text": "عيد الفطر المبارك"},
+    {"m": 10, "d": 25, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الصادق (ع)"},
+
+    {"m": 11, "d": 1, "kind": "wiladah", "text": "ميلاد السيدة فاطمة المعصومة (ع)"},
+    {"m": 11, "d": 11, "kind": "wiladah", "text": "ميلاد الإمام الرضا (ع)"},
+    {"m": 11, "d": "last", "kind": "shahadah", "text": "ذكرى استشهاد الإمام الجواد (ع)"},
+
+    {"m": 12, "d": 7, "kind": "shahadah", "text": "ذكرى استشهاد الإمام الباقر (ع)"},
+    {"m": 12, "d": 9, "kind": "season", "text": "يوم عرفة"},
+    {"m": 12, "d": 10, "kind": "eid", "text": "عيد الأضحى المبارك"},
+    {"m": 12, "d": 15, "kind": "wiladah", "text": "ميلاد الإمام الهادي (ع)", "alt": "2 رجب"},
+    {"m": 12, "d": 18, "kind": "eid", "text": "عيد الغدير الأغر"},
+    {"m": 12, "d": 24, "kind": "eid", "text": "يوم المباهلة"}
+  ],
+  "rules": [
+    "An occasion takes the place of «جمعة مباركة» on its day; a plain Friday keeps «جمعة مباركة».",
+    "On a shahadah day and during the first ten nights of Muharram, no greeting and no gold colour: a calm grey line.",
+    "The occasion follows the adjusted Hijri date (the ±1/±2 day setting).",
+    "The White Days line (13-15) gives way to an occasion on the same day."
+  ]
+}

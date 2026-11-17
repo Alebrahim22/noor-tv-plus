@@ -1,0 +1,83 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'app.noortv'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 34
+        versionCode 20
+        versionName '2.0'
+        buildConfigField 'double', 'LAT', project.property('noor.lat')
+        buildConfigField 'double', 'LON', project.property('noor.lon')
+        buildConfigField 'String', 'PIN', "\"${project.property('noor.pin')}\""
+        buildConfigField 'String', 'DUA', '""'
+        buildConfigField 'String', 'VIDEO', '""'
+        buildConfigField 'boolean', 'REMINDERS', 'false'
+    }
+
+    // One small app per shortcut, so each gets its own tile on the home screen. The Kahf app also carries the
+    // adhan, the duas' recordings, the reminders and the phone page.
+    flavorDimensions = ['item']
+    productFlavors {
+        kahf {
+            dimension 'item'
+            applicationId 'app.noortv.kahf'
+            resValue 'string', 'app_name', 'سورة الكهف'
+            buildConfigField 'String', 'VIDEO', '"9k1U0aGQRNA"'
+            buildConfigField 'boolean', 'REMINDERS', 'true'
+        }
+        baqara {
+            dimension 'item'
+            applicationId 'app.noortv.baqara'
+            resValue 'string', 'app_name', 'سورة البقرة'
+            buildConfigField 'String', 'VIDEO', '"9HW7j9lZZTU"'
+        }
+        sabah {
+            dimension 'item'
+            applicationId 'app.noortv.sabah'
+            resValue 'string', 'app_name', 'أذكار الصباح'
+            buildConfigField 'String', 'VIDEO', '"fD4uDIoCn3M"'
+        }
+        masa {
+            dimension 'item'
+            applicationId 'app.noortv.masa'
+            resValue 'string', 'app_name', 'أذكار المساء'
+            buildConfigField 'String', 'VIDEO', '"rQnNno3Do60"'
+        }
+        ruqya {
+            dimension 'item'
+            applicationId 'app.noortv.ruqya'
+            resValue 'string', 'app_name', 'الرقية الشرعية'
+            buildConfigField 'String', 'VIDEO', '"BVtCjMyJ320"'
+        }
+        nudba {
+            dimension 'item'
+            applicationId 'app.noortv.nudba'
+            resValue 'string', 'app_name', 'دعاء الندبة'
+            buildConfigField 'String', 'DUA', '"nudba"'
+        }
+        kumayl {
+            dimension 'item'
+            applicationId 'app.noortv.kumayl'
+            resValue 'string', 'app_name', 'دعاء كميل'
+            buildConfigField 'String', 'DUA', '"kumayl"'
+        }
+    }
+
+    buildFeatures { buildConfig true }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Sideloaded over ADB like the launcher: signed with the debug key.
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
